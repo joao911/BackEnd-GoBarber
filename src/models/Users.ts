@@ -15,7 +15,10 @@ class User {
   provider: string;
 
   @Column()
-  emial: string;
+  email: string;
+
+  @Column()
+  name: string;
 
   @Column()
   password: string;
