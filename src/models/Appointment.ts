@@ -16,6 +16,7 @@ class Appointment {
 
   @Column("timestamp with time zone")
   date: Date;
+  
   @CreateDateColumn()
   created_at: Date;
 
