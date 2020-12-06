@@ -12,9 +12,6 @@ class User {
   id: string;
 
   @Column()
-  provider: string;
-
-  @Column()
   email: string;
 
   @Column()
