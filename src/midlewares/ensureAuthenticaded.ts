@@ -27,10 +27,12 @@ export default function ensureAuthenticated(
 
     const { sub } = decoded as TokenPayload;
 
-    
+    request.user = {
+      id: sub,
+    };
 
     return next();
   } catch {
-    throw new Error('Invalid JWT token');
+    throw new Error('Invalid JWT token se aparecer não autenticou');
   }
 }

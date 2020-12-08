@@ -1,27 +1,37 @@
 import { Router } from "express";
-import CreateUserService from '../services/CreateUserService'
+import multer from "multer";
+import upLoadConfig from "../config/upload";
+import ensureAuthenticated from "../midlewares/ensureAuthenticaded";
+import CreateUserService from "../services/CreateUserService";
 
 const usersRouter = Router();
+const upload = multer(upLoadConfig);
 
-
-
-usersRouter.post("/", async(request, response) => {
+usersRouter.post("/", async (request, response) => {
   try {
-   const {name, email, password} = request.body;
+    const { name, email, password } = request.body;
 
-   const createUser = new CreateUserService();
+    const createUser = new CreateUserService();
 
-   const user = await createUser.execute({
-     name, 
-     email,
-     password,
-   })
+    const user = await createUser.execute({
+      name,
+      email,
+      password,
+    });
 
-
-   return response.json(user);
-     
+    return response.json(user);
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
 });
+
+usersRouter.patch(
+  '/avatar',
+  ensureAuthenticated,
+  upload.single("avatar"),
+  async (request, response) => {
+    console.log(request.file);
+    return response.json({ ok: true });
+  }
+);
 export default usersRouter;
